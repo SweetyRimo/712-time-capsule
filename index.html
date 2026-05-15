@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>712时间胶囊 · QQ会员节</title>
+<style>
+  /* ========== CSS Variables ========== */
+  :root {
+    --vip-gold: #FFD700;
+    --vip-gold-dark: #D4A800;
+    --vip-gold-light: #FFF1A8;
+    --vip-red: #E53935;
+    --vip-red-dark: #B71C1C;
+    --vip-orange: #FF6D00;
+    --bg-dark: #0A0A1A;
+    --bg-card: rgba(255,215,0,0.06);
+    --bg-card-border: rgba(255,215,0,0.2);
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255,255,255,0.7);
+    --text-gold: #FFD700;
+    --text-glow: 0 0 20px rgba(255,215,0,0.3);
+  }
+
+  /* ========== Reset & Base ========== */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 16px; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ========== Starfield Background ========== */
+  .starfield {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+  }
+  .star {
+    position: absolute; border-radius: 50%; background: #fff;
+    animation: twinkle var(--dur) ease-in-out infinite alternate;
+  }
+  @keyframes twinkle {
+    0% { opacity: 0.2; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* ========== Golden Particles ========== */
+  .particles-container {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 1; overflow: hidden;
+  }
+  .particle {
+    position: absolute; width: 3px; height: 3px; border-radius: 50%;
+    background: var(--vip-gold);
+    animation: float-up var(--dur) linear infinite;
+    opacity: 0;
+  }
+  @keyframes float-up {
+    0% { opacity: 0; transform: translateY(0) scale(0); }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.3; }
+    100% { opacity: 0; transform: translateY(-100vh) scale(1); }
+  }
+
+  /* ========== Main Container ========== */
+  .main-container {
+    position: relative; z-index: 2;
+    max-width: 430px; margin: 0 auto;
+    padding: 0 0 80px 0;
+  }
+
+  /* ========== Section Base ========== */
+  .section {
+    padding: 40px 24px;
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .section.visible {
+    opacity: 1; transform: translateY(0);
+  }
+  .section-divider {
+    text-align: center; padding: 20px 0;
+    opacity: 0; transition: opacity 0.6s ease 0.3s;
+  }
+  .section-divider.visible { opacity: 1; }
+  .section-divider .line {
+    display: inline-block; width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--vip-gold), transparent);
+  }
+
+  /* ========== Hero Section ========== */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 60px 24px;
+    position: relative;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,109,0,0.1));
+    border: 1px solid rgba(255,215,0,0.3);
+    border-radius: 20px; padding: 6px 16px;
+    font-size: 12px; color: var(--vip-gold);
+    letter-spacing: 2px; margin-bottom: 24px;
+    animation: badge-glow 2s ease-in-out infinite alternate;
+  }
+  @keyframes badge-glow {
+    0% { box-shadow: 0 0 10px rgba(255,215,0,0.1); }
+    100% { box-shadow: 0 0 25px rgba(255,215,0,0.3); }
+  }
+  .hero-year {
+    font-size: 80px; font-weight: 900;
+    background: linear-gradient(180deg, var(--vip-gold-light), var(--vip-gold), var(--vip-orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; line-height: 1;
+    letter-spacing: 4px;
+    filter: drop-shadow(0 0 30px rgba(255,215,0,0.3));
+  }
+  .hero-title {
+    font-size: 32px; font-weight: 700;
+    color: var(--text-primary); margin-top: 8px;
+    letter-spacing: 8px;
+  }
+  .hero-subtitle {
+    font-size: 15px; color: var(--text-secondary);
+    margin-top: 16px; line-height: 2;
+    letter-spacing: 2px;
+  }
+
+  /* Penguin SVG */
+  .penguin-container {
+    margin: 32px 0;
+    animation: penguin-bounce 3s ease-in-out infinite;
+    filter: drop-shadow(0 10px 30px rgba(255,215,0,0.2));
+  }
+  @keyframes penguin-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .hero-cta {
+    margin-top: 20px;
+    background: linear-gradient(135deg, var(--vip-gold), var(--vip-orange));
+    color: #1a1a1a; border: none; border-radius: 25px;
+    padding: 14px 40px; font-size: 16px; font-weight: 700;
+    letter-spacing: 2px; cursor: pointer;
+    box-shadow: 0 4px 20px rgba(255,215,0,0.3);
+    transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+  .hero-cta::after {
+    content: ''; position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+    animation: shimmer 3s infinite;
+  }
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  .hero-cta:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 10px rgba(255,215,0,0.4);
+  }
+
+  .hero-scroll-hint {
+    position: absolute; bottom: 30px;
+    animation: scroll-bounce 2s ease-in-out infinite;
+    color: var(--text-secondary); font-size: 12px;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .hero-scroll-hint .arrow { font-size: 16px; }
+  @keyframes scroll-bounce {
+    0%, 100% { transform: translateY(0); opacity: 0.5; }
+    50% { transform: translateY(8px); opacity: 1; }
+  }
+
+  /* ========== Growth Summary Section ========== */
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--vip-gold); letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .section-label .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--vip-gold);
+  }
+  .section-title {
+    font-size: 24px; font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--text-primary), var(--vip-gold-light));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .section-desc {
+    font-size: 14px; color: var(--text-secondary);
+    line-height: 1.8; margin-bottom: 28px;
+  }
+
+  /* Stats Cards */
+  .stats-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--bg-card-border);
+    border-radius: 16px; padding: 20px 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  .stat-card:active { transform: scale(0.97); }
+  .stat-icon { font-size: 28px; margin-bottom: 8px; }
+  .stat-number {
+    font-size: 28px; font-weight: 900;
+    background: linear-gradient(180deg, var(--vip-gold), var(--vip-orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-unit { font-size: 12px; color: var(--vip-gold); margin-left: 2px; }
+  .stat-label { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+
+  /* Growth Timeline */
+  .growth-timeline {
+    position: relative; padding-left: 24px; margin-bottom: 24px;
+  }
+  .growth-timeline::before {
+    content: ''; position: absolute; left: 6px; top: 0;
+    width: 2px; height: 100%;
+    background: linear-gradient(180deg, var(--vip-gold), transparent);
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 20px;
+    padding: 16px; background: var(--bg-card);
+    border: 1px solid var(--bg-card-border);
+    border-radius: 12px;
+  }
+  .timeline-item::before {
+    content: ''; position: absolute; left: -22px; top: 20px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--vip-gold);
+    box-shadow: 0 0 10px rgba(255,215,0,0.5);
+  }
+  .timeline-date {
+    font-size: 11px; color: var(--vip-gold);
+    letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .timeline-text {
+    font-size: 14px; color: var(--text-primary); line-height: 1.6;
+  }
+  .timeline-highlight {
+    color: var(--vip-gold); font-weight: 600;
+  }
+
+  /* ========== AI Typing Effect ========== */
+  .ai-card {
+    background: linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,109,0,0.04));
+    border: 1px solid rgba(255,215,0,0.25);
+    border-radius: 20px; padding: 24px;
+    position: relative; overflow: hidden;
+  }
+  .ai-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--vip-gold), var(--vip-orange), var(--vip-gold));
+    background-size: 200% 100%;
+    animation: gradient-flow 3s linear infinite;
+  }
+  @keyframes gradient-flow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+  .ai-label {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--vip-gold); letter-spacing: 1px;
+    margin-bottom: 16px;
+    background: rgba(255,215,0,0.1); border-radius: 12px;
+    padding: 4px 10px;
+  }
+  .ai-label .pulse {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--vip-gold);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.3); }
+  }
+  .ai-text {
+    font-size: 15px; line-height: 2; color: var(--text-primary);
+    min-height: 80px;
+  }
+  .ai-cursor {
+    display: inline-block; width: 2px; height: 1em;
+    background: var(--vip-gold); margin-left: 2px;
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+  }
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  /* ========== Prediction Section ========== */
+  .prediction-portrait {
+    width: 180px; height: 180px; margin: 0 auto 24px;
+    border-radius: 50%; position: relative;
+    background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,109,0,0.05));
+    border: 2px solid rgba(255,215,0,0.3);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .prediction-portrait::after {
+    content: ''; position: absolute; inset: -4px;
+    border-radius: 50%;
+    border: 2px dashed rgba(255,215,0,0.2);
+    animation: rotate-slow 20s linear infinite;
+  }
+  @keyframes rotate-slow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .portrait-inner {
+    text-align: center;
+  }
+  .portrait-icon { font-size: 48px; }
+  .portrait-tag {
+    font-size: 11px; color: var(--vip-gold); margin-top: 6px;
+    letter-spacing: 2px;
+  }
+
+  .prediction-tags {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 20px; justify-content: center;
+  }
+  .pred-tag {
+    background: rgba(255,215,0,0.1);
+    border: 1px solid rgba(255,215,0,0.25);
+    border-radius: 16px; padding: 6px 14px;
+    font-size: 13px; color: var(--vip-gold);
+    transition: all 0.3s ease;
+  }
+  .pred-tag.active {
+    background: linear-gradient(135deg, var(--vip-gold), var(--vip-orange));
+    color: #1a1a1a; font-weight: 600;
+    border-color: transparent;
+    box-shadow: 0 2px 12px rgba(255,215,0,0.3);
+  }
+
+  .prediction-ai-card {
+    margin-top: 20px;
+  }
+
+  /* ========== Letter Section ========== */
+  .letter-section {
+    position: relative;
+  }
+  .letter-envelope {
+    background: linear-gradient(180deg, #2A1F0A, #1A1408);
+    border: 2px solid rgba(255,215,0,0.3);
+    border-radius: 20px; padding: 32px 24px;
+    position: relative; overflow: hidden;
+  }
+  .letter-envelope::before {
+    content: '';
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 160px solid transparent;
+    border-right: 160px solid transparent;
+    border-top: 80px solid rgba(255,215,0,0.08);
+    pointer-events: none;
+  }
+  .letter-seal {
+    width: 60px; height: 60px; margin: 0 auto 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--vip-red), var(--vip-red-dark));
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 15px rgba(229,57,53,0.3);
+    position: relative; z-index: 1;
+  }
+  .letter-seal-text {
+    font-size: 10px; color: #fff; font-weight: 700;
+    letter-spacing: 1px; text-align: center; line-height: 1.3;
+  }
+
+  /* Keyword Selector */
+  .keyword-grid {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center; margin: 20px 0;
+  }
+  .keyword-chip {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px; padding: 8px 16px;
+    font-size: 13px; color: var(--text-secondary);
+    cursor: pointer; transition: all 0.3s ease;
+    user-select: none;
+  }
+  .keyword-chip.selected {
+    background: rgba(255,215,0,0.15);
+    border-color: var(--vip-gold);
+    color: var(--vip-gold);
+    box-shadow: 0 2px 10px rgba(255,215,0,0.15);
+  }
+  .keyword-chip:active { transform: scale(0.95); }
+
+  /* Letter Textarea */
+  .letter-textarea {
+    width: 100%; min-height: 160px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,215,0,0.15);
+    border-radius: 12px; padding: 16px;
+    color: var(--text-primary); font-size: 14px;
+    line-height: 1.8; resize: none;
+    font-family: inherit;
+  }
+  .letter-textarea::placeholder { color: rgba(255,255,255,0.3); }
+  .letter-textarea:focus {
+    outline: none;
+    border-color: rgba(255,215,0,0.4);
+    box-shadow: 0 0 20px rgba(255,215,0,0.1);
+  }
+
+  .letter-ai-hint {
+    display: flex; align-items: center; gap: 8px;
+    margin-top: 12px; font-size: 12px; color: var(--text-secondary);
+  }
+  .letter-ai-hint .sparkle { color: var(--vip-gold); }
+  .ai-gen-btn {
+    margin-left: auto;
+    background: linear-gradient(135deg, var(--vip-gold), var(--vip-orange));
+    color: #1a1a1a; border: none; border-radius: 12px;
+    padding: 5px 14px; font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .ai-gen-btn:active { transform: scale(0.95); }
+  .ai-gen-btn:disabled {
+    background: #333; color: #666; cursor: not-allowed;
+  }
+
+  /* ========== Seal Section ========== */
+  .seal-section {
+    text-align: center; padding: 60px 24px;
+  }
+  .seal-animation {
+    width: 120px; height: 120px; margin: 0 auto 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--vip-gold), var(--vip-orange));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+    box-shadow: 0 8px 40px rgba(255,215,0,0.4);
+    animation: seal-glow 2s ease-in-out infinite alternate;
+    position: relative;
+  }
+  @keyframes seal-glow {
+    0% { box-shadow: 0 8px 40px rgba(255,215,0,0.3); }
+    100% { box-shadow: 0 8px 60px rgba(255,215,0,0.6); }
+  }
+  .seal-ring {
+    position: absolute; inset: -12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,215,0,0.3);
+    animation: ring-expand 2s ease-out infinite;
+  }
+  @keyframes ring-expand {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+
+  .seal-btn {
+    background: linear-gradient(135deg, var(--vip-gold), var(--vip-orange));
+    color: #1a1a1a; border: none; border-radius: 25px;
+    padding: 16px 48px; font-size: 16px; font-weight: 700;
+    letter-spacing: 2px; cursor: pointer;
+    box-shadow: 0 4px 20px rgba(255,215,0,0.3);
+    transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+  .seal-btn::after {
+    content: ''; position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%);
+    animation: shimmer 3s infinite;
+  }
+  .seal-btn:active { transform: scale(0.95); }
+  .seal-btn.sealed {
+    background: linear-gradient(135deg, #444, #333);
+    color: var(--vip-gold);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+  .seal-btn.sealed::after { display: none; }
+
+  .seal-date {
+    margin-top: 16px; font-size: 13px; color: var(--text-secondary);
+  }
+  .seal-date strong { color: var(--vip-gold); }
+
+  /* ========== Toast / Modal ========== */
+  .toast {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(0,0,0,0.9);
+    border: 1px solid rgba(255,215,0,0.4);
+    border-radius: 20px; padding: 32px 28px;
+    text-align: center; z-index: 100;
+    opacity: 0; pointer-events: none;
+    transition: all 0.4s ease;
+    max-width: 300px; width: 80%;
+  }
+  .toast.show {
+    opacity: 1; transform: translate(-50%, -50%) scale(1);
+    pointer-events: auto;
+  }
+  .toast-icon { font-size: 48px; margin-bottom: 12px; }
+  .toast-title {
+    font-size: 18px; font-weight: 700;
+    color: var(--vip-gold); margin-bottom: 8px;
+  }
+  .toast-text {
+    font-size: 13px; color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .toast-close {
+    margin-top: 20px; background: none;
+    border: 1px solid rgba(255,215,0,0.4);
+    color: var(--vip-gold); border-radius: 16px;
+    padding: 8px 24px; font-size: 13px;
+    cursor: pointer;
+  }
+
+  /* ========== Footer ========== */
+  .footer {
+    text-align: center; padding: 40px 24px;
+    border-top: 1px solid rgba(255,215,0,0.1);
+  }
+  .footer-logo {
+    font-size: 14px; color: var(--vip-gold); font-weight: 600;
+    letter-spacing: 2px; margin-bottom: 8px;
+  }
+  .footer-text {
+    font-size: 11px; color: rgba(255,255,255,0.3);
+    line-height: 1.6;
+  }
+
+  /* ========== Animations ========== */
+  .fade-in-up {
+    opacity: 0; transform: translateY(20px);
+    transition: all 0.6s ease;
+  }
+  .fade-in-up.show { opacity: 1; transform: translateY(0); }
+
+  .count-up { transition: all 0.5s ease; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.2); border-radius: 3px; }
+
+  /* ========== Fireworks Canvas ========== */
+  #fireworksCanvas {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 99;
+  }
+</style>
+</head>
+<body>
+
+<!-- Starfield -->
+<div class="starfield" id="starfield"></div>
+
+<!-- Golden Particles -->
+<div class="particles-container" id="particles"></div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <div class="toast-icon">✉️</div>
+  <div class="toast-title">时间胶囊已封存</div>
+  <div class="toast-text">你的信将在2027年7月12日准时送达，届时QQ会员将为你开启这份时光礼物。</div>
+  <button class="toast-close" onclick="closeToast()">我知道了</button>
+</div>
+
+<!-- Fireworks -->
+<canvas id="fireworksCanvas"></canvas>
+
+<!-- Main Content -->
+<div class="main-container">
+
+  <!-- ====== Hero ====== -->
+  <section class="hero" id="hero">
+    <div class="hero-badge">
+      <span>👑</span> QQ会员712会员节
+    </div>
+    <div class="hero-year">7·12</div>
+    <div class="hero-title">时间胶囊</div>
+    <div class="hero-subtitle">
+      回望来路，寄语未来<br>
+      你的每一刻陪伴，都值得被铭记
+    </div>
+
+    <!-- Penguin SVG -->
+    <div class="penguin-container">
+      <svg width="120" height="140" viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Body -->
+        <ellipse cx="60" cy="80" rx="38" ry="48" fill="#1A1A2E"/>
+        <!-- Belly -->
+        <ellipse cx="60" cy="85" rx="24" ry="35" fill="#F5F5F5"/>
+        <!-- Left Eye -->
+        <ellipse cx="48" cy="55" rx="8" ry="9" fill="white"/>
+        <ellipse cx="50" cy="55" rx="4" ry="5" fill="#1A1A2E"/>
+        <circle cx="51" cy="53" r="1.5" fill="white"/>
+        <!-- Right Eye -->
+        <ellipse cx="72" cy="55" rx="8" ry="9" fill="white"/>
+        <ellipse cx="70" cy="55" rx="4" ry="5" fill="#1A1A2E"/>
+        <circle cx="71" cy="53" r="1.5" fill="white"/>
+        <!-- Beak -->
+        <path d="M54 65 L60 72 L66 65 Z" fill="#FF9800"/>
+        <!-- Crown / VIP -->
+        <path d="M36 38 L44 28 L52 36 L60 22 L68 36 L76 28 L84 38" fill="url(#crownGrad)" stroke="#D4A800" stroke-width="1"/>
+        <!-- Crown Gems -->
+        <circle cx="60" cy="26" r="3" fill="#E53935"/>
+        <circle cx="44" cy="32" r="2" fill="#4FC3F7"/>
+        <circle cx="76" cy="32" r="2" fill="#4FC3F7"/>
+        <!-- Left Wing -->
+        <path d="M22 65 Q18 85 28 105 Q32 100 30 85 Z" fill="#1A1A2E" stroke="#2A2A4E" stroke-width="0.5"/>
+        <!-- Right Wing -->
+        <path d="M98 65 Q102 85 92 105 Q88 100 90 85 Z" fill="#1A1A2E" stroke="#2A2A4E" stroke-width="0.5"/>
+        <!-- Left Foot -->
+        <ellipse cx="47" cy="128" rx="10" ry="5" fill="#FF9800"/>
+        <!-- Right Foot -->
+        <ellipse cx="73" cy="128" rx="10" ry="5" fill="#FF9800"/>
+        <!-- Scarf -->
+        <path d="M38 68 Q60 78 82 68 Q82 74 60 84 Q38 74 38 68 Z" fill="#E53935"/>
+        <rect x="72" y="72" width="8" height="20" rx="4" fill="#E53935" transform="rotate(15 72 72)"/>
+        <!-- Stars around penguin -->
+        <circle cx="15" cy="50" r="2" fill="#FFD700" opacity="0.6"/>
+        <circle cx="105" cy="45" r="1.5" fill="#FFD700" opacity="0.5"/>
+        <circle cx="20" cy="100" r="1.5" fill="#FFD700" opacity="0.4"/>
+        <circle cx="100" cy="95" r="2" fill="#FFD700" opacity="0.5"/>
+        <defs>
+          <linearGradient id="crownGrad" x1="36" y1="22" x2="84" y2="38">
+            <stop offset="0%" stop-color="#FFD700"/>
+            <stop offset="100%" stop-color="#FF8C00"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <button class="hero-cta" onclick="scrollToContent()">开启时间胶囊</button>
+
+    <div class="hero-scroll-hint">
+      <span>向下滑动探索</span>
+      <span class="arrow">↓</span>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <div class="section-divider" data-animate>
+    <span class="line"></span>
+  </div>
+
+  <!-- ====== Growth Summary ====== -->
+  <section class="section" id="growth" data-animate>
+    <div class="section-label"><span class="dot"></span> 成长回顾</div>
+    <div class="section-title">你的会员时光</div>
+    <div class="section-desc">从你成为QQ会员的那一天起，每一段陪伴都被温柔记录。</div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🔥</div>
+        <div class="stat-number"><span class="count-up" data-target="1247">0</span><span class="stat-unit">天</span></div>
+        <div class="stat-label">会员陪伴时长</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💎</div>
+        <div class="stat-number"><span class="count-up" data-target="38">0</span><span class="stat-unit">次</span></div>
+        <div class="stat-label">特权使用次数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎮</div>
+        <div class="stat-number"><span class="count-up" data-target="256">0</span><span class="stat-unit">个</span></div>
+        <div class="stat-label">游戏礼包领取</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⭐</div>
+        <div class="stat-number"><span class="count-up" data-target="89">0</span><span class="stat-unit">级</span></div>
+        <div class="stat-label">当前成长等级</div>
+      </div>
+    </div>
+
+    <div class="growth-timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">2022年3月 · 初次开通</div>
+        <div class="timeline-text">你第一次点亮了<span class="timeline-highlight">QQ会员图标</span>，开启了尊贵之旅 ✨</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2023年7月 · 首次712</div>
+        <div class="timeline-text">第一次参与<span class="timeline-highlight">712会员节</span>，领走了3款游戏皮肤 🎮</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2024年1月 · 成长突破</div>
+        <div class="timeline-text">成长值突破<span class="timeline-highlight">VIP7</span>，解锁了专属身份铭牌 🏆</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2025年7月 · 再赴712</div>
+        <div class="timeline-text">连续2年参与712会员节，获「<span class="timeline-highlight">忠粉会员</span>」称号 🎖️</div>
+      </div>
+    </div>
+
+    <!-- AI Summary -->
+    <div class="ai-card">
+      <div class="ai-label">
+        <span class="pulse"></span> AI 成长总结
+      </div>
+      <div class="ai-text" id="aiSummary">
+        <span class="ai-cursor"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <div class="section-divider" data-animate>
+    <span class="line"></span>
+  </div>
+
+  <!-- ====== Prediction Section ====== -->
+  <section class="section" id="prediction" data-animate>
+    <div class="section-label"><span class="dot"></span> 预言未来</div>
+    <div class="section-title">一年后的你</div>
+    <div class="section-desc">根据你的会员成长轨迹，AI为你预言一年后的自己。</div>
+
+    <div class="prediction-portrait">
+      <div class="portrait-inner">
+        <div class="portrait-icon">🔮</div>
+        <div class="portrait-tag">未来画像</div>
+      </div>
+    </div>
+
+    <div class="prediction-tags">
+      <span class="pred-tag active">🚀 成长加速</span>
+      <span class="pred-tag">🎮 游戏达人</span>
+      <span class="pred-tag">💎 尊贵进阶</span>
+      <span class="pred-tag">🌟 社交达人</span>
+      <span class="pred-tag">🎁 礼包收集</span>
+      <span class="pred-tag">👑 荣耀之巅</span>
+    </div>
+
+    <div class="ai-card prediction-ai-card">
+      <div class="ai-label">
+        <span class="pulse"></span> AI 未来预言
+      </div>
+      <div class="ai-text" id="aiPrediction">
+        <span class="ai-cursor"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <div class="section-divider" data-animate>
+    <span class="line"></span>
+  </div>
+
+  <!-- ====== Letter Section ====== -->
+  <section class="section letter-section" id="letter" data-animate>
+    <div class="section-label"><span class="dot"></span> 寄信给未来</div>
+    <div class="section-title">写给未来的自己</div>
+    <div class="section-desc">选几个关键词，让AI帮你起草一封时光信件，你也可以自由修改。</div>
+
+    <div class="letter-envelope">
+      <div class="letter-seal">
+        <div class="letter-seal-text">712<br>时光</div>
+      </div>
+
+      <div class="keyword-grid" id="keywordGrid">
+        <span class="keyword-chip" data-kw="感恩">🙏 感恩</span>
+        <span class="keyword-chip" data-kw="成长">🌱 成长</span>
+        <span class="keyword-chip" data-kw="勇气">💪 勇气</span>
+        <span class="keyword-chip" data-kw="陪伴">🤝 陪伴</span>
+        <span class="keyword-chip" data-kw="梦想">🌟 梦想</span>
+        <span class="keyword-chip" data-kw="自由">🕊️ 自由</span>
+        <span class="keyword-chip" data-kw="热爱">🔥 热爱</span>
+        <span class="keyword-chip" data-kw="期待">✨ 期待</span>
+        <span class="keyword-chip" data-kw="初心">💎 初心</span>
+      </div>
+
+      <textarea class="letter-textarea" id="letterText" placeholder="选择关键词后，AI将为你生成信件内容，你也可以直接书写..."></textarea>
+
+      <div class="letter-ai-hint">
+        <span class="sparkle">✨</span>
+        <span id="aiHint">选择关键词后点击生成，AI将为你起草信件</span>
+        <button class="ai-gen-btn" id="aiGenBtn" onclick="generateLetter()" disabled>AI生成</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <div class="section-divider" data-animate>
+    <span class="line"></span>
+  </div>
+
+  <!-- ====== Seal Section ====== -->
+  <section class="seal-section" id="sealSection" data-animate>
+    <div class="seal-animation">
+      <div class="seal-ring"></div>
+      📬
+    </div>
+    <div class="section-title" style="text-align:center;">封存你的时间胶囊</div>
+    <div class="section-desc" style="text-align:center; max-width:280px; margin:12px auto 28px;">
+      信件将在一年后的7月12日准时送达，<br>届时QQ会员将为你开启这份时光礼物。
+    </div>
+    <button class="seal-btn" id="sealBtn" onclick="sealCapsule()">🔒 封存时间胶囊</button>
+    <div class="seal-date">送达时间：<strong>2027年7月12日</strong></div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-logo">👑 QQ会员 · 712会员节</div>
+    <div class="footer-text">
+      时间胶囊 · 珍藏每一刻陪伴<br>
+      © 2026 Tencent QQ VIP
+    </div>
+  </footer>
+
+</div>
+
+<script>
+// ====== Starfield ======
+(function() {
+  const sf = document.getElementById('starfield');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2 + 1;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%; top:${Math.random()*100}%;
+      --dur:${Math.random()*3+2}s;
+      animation-delay:${Math.random()*3}s;
+      opacity:${Math.random()*0.5+0.2};
+    `;
+    sf.appendChild(s);
+  }
+})();
+
+// ====== Particles ======
+(function() {
+  const pc = document.getElementById('particles');
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const dur = Math.random() * 8 + 6;
+    p.style.cssText = `
+      left:${Math.random()*100}%; bottom: -10px;
+      --dur:${dur}s;
+      animation-delay:${Math.random()*dur}s;
+      width:${Math.random()*3+1}px; height:${Math.random()*3+1}px;
+    `;
+    pc.appendChild(p);
+  }
+})();
+
+// ====== Scroll Animations ======
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Trigger count-up
+      if (entry.target.id === 'growth') {
+        startCountUp();
+        startAiTyping('aiSummary', aiSummaryText);
+      }
+      if (entry.target.id === 'prediction') {
+        startAiTyping('aiPrediction', aiPredictionText);
+      }
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+// ====== Count Up ======
+let countUpDone = false;
+function startCountUp() {
+  if (countUpDone) return;
+  countUpDone = true;
+  document.querySelectorAll('.count-up').forEach(el => {
+    const target = parseInt(el.dataset.target);
+    let current = 0;
+    const step = Math.max(1, Math.floor(target / 40));
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) { current = target; clearInterval(timer); }
+      el.textContent = current;
+    }, 30);
+  });
+}
+
+// ====== AI Typing ======
+const aiSummaryText = "你是一位与QQ会员同行1247天的忠实用户。三年间，你从初识会员的新人，成长为VIP7的资深会员。你热爱游戏，领取了256次礼包；你珍视特权，使用了38次专属权益。712会员节是你每年最期待的日子——连续两年，从未缺席。AI认为：你是一位懂得享受生活、善于发现价值的会员达人。";
+
+const aiPredictionText = "一年后的你，成长值将突破VIP8，解锁更多尊享权益。你将成为712会员节的「三年老兵」，获得专属荣誉徽章。游戏领域，你的礼包领取次数将突破400次，成为真正的游戏达人。社交方面，你将带领3位好友加入QQ会员大家庭。一年后的你，比现在更闪耀。";
+
+const aiTypingDone = {};
+
+function startAiTyping(elementId, text) {
+  if (aiTypingDone[elementId]) return;
+  aiTypingDone[elementId] = true;
+  const el = document.getElementById(elementId);
+  let idx = 0;
+  const cursor = el.querySelector('.ai-cursor');
+  
+  function type() {
+    if (idx < text.length) {
+      const span = document.createTextNode(text[idx]);
+      el.insertBefore(span, cursor);
+      idx++;
+      setTimeout(type, 40 + Math.random() * 30);
+    }
+  }
+  setTimeout(type, 500);
+}
+
+// ====== Hero CTA ======
+function scrollToContent() {
+  document.getElementById('growth').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ====== Prediction Tags ======
+document.querySelectorAll('.pred-tag').forEach(tag => {
+  tag.addEventListener('click', function() {
+    this.classList.toggle('active');
+  });
+});
+
+// ====== Keyword Chips ======
+const selectedKeywords = new Set();
+const letterTemplates = {
+  '感恩': '感谢过去的每一次选择，让我成为更好的自己。',
+  '成长': '每一步成长都算数，未来的我会更强大。',
+  '勇气': '愿我永远有勇气面对未知，拥抱变化。',
+  '陪伴': '谢谢那些陪我走过的人和事，未来继续同行。',
+  '梦想': '梦想不分大小，每一个都值得全力以赴。',
+  '自由': '愿我拥有选择的自由，也有承担的力量。',
+  '热爱': '保持热爱，保持好奇，保持那个眼里有光的自己。',
+  '期待': '期待遇见更好的自己，期待生活给我的惊喜。',
+  '初心': '无论走多远，别忘了当初为什么出发。'
+};
+
+document.querySelectorAll('.keyword-chip').forEach(chip => {
+  chip.addEventListener('click', function() {
+    const kw = this.dataset.kw;
+    if (selectedKeywords.has(kw)) {
+      selectedKeywords.delete(kw);
+      this.classList.remove('selected');
+    } else {
+      selectedKeywords.add(kw);
+      this.classList.add('selected');
+    }
+    updateAiBtn();
+  });
+});
+
+function updateAiBtn() {
+  const btn = document.getElementById('aiGenBtn');
+  const hint = document.getElementById('aiHint');
+  if (selectedKeywords.size > 0) {
+    btn.disabled = false;
+    hint.textContent = `已选${selectedKeywords.size}个关键词，点击生成信件`;
+  } else {
+    btn.disabled = true;
+    hint.textContent = '选择关键词后点击生成，AI将为你起草信件';
+  }
+}
+
+function generateLetter() {
+  const textarea = document.getElementById('letterText');
+  const hint = document.getElementById('aiHint');
+  
+  if (selectedKeywords.size === 0) {
+    hint.textContent = '请先选择至少一个关键词';
+    return;
+  }
+  
+  // Simulate AI generation with delay
+  const btn = document.getElementById('aiGenBtn');
+  btn.textContent = '生成中...';
+  btn.disabled = true;
+  
+  setTimeout(() => {
+    const intro = '亲爱的未来的我：\n\n';
+    let body = '';
+    selectedKeywords.forEach(kw => {
+      body += letterTemplates[kw] + '\n\n';
+    });
+    const ending = '这是一封从2026年寄出的信，希望收到它的你，依然闪闪发光。\n\n—— 2026年的自己';
+    
+    textarea.value = intro + body + ending;
+    hint.textContent = `✨ 已根据${selectedKeywords.size}个关键词生成信件，可自由修改`;
+    btn.textContent = '重新生成';
+    btn.disabled = false;
+  }, 800);
+}
+
+// ====== Seal ======
+function sealCapsule() {
+  const btn = document.getElementById('sealBtn');
+  if (btn.classList.contains('sealed')) return;
+  
+  btn.classList.add('sealed');
+  btn.textContent = '✅ 已封存';
+  
+  // Launch fireworks
+  launchFireworks();
+  
+  setTimeout(() => {
+    document.getElementById('toast').classList.add('show');
+  }, 600);
+}
+
+function closeToast() {
+  document.getElementById('toast').classList.remove('show');
+}
+
+// ====== Fireworks ======
+function launchFireworks() {
+  const canvas = document.getElementById('fireworksCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  
+  const fireworks = [];
+  const colors = ['#FFD700', '#FF6D00', '#E53935', '#FFF1A8', '#4FC3F7', '#FF4081'];
+  
+  class Particle {
+    constructor(x, y, color) {
+      this.x = x; this.y = y;
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 4 + 1;
+      this.vx = Math.cos(angle) * speed;
+      this.vy = Math.sin(angle) * speed;
+      this.alpha = 1;
+      this.color = color;
+      this.size = Math.random() * 2 + 1;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.vy += 0.03;
+      this.alpha -= 0.015;
+    }
+    draw() {
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, this.alpha);
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+  
+  // Create 5 bursts
+  for (let b = 0; b < 5; b++) {
+    setTimeout(() => {
+      const cx = Math.random() * canvas.width * 0.6 + canvas.width * 0.2;
+      const cy = Math.random() * canvas.height * 0.4 + canvas.height * 0.1;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      for (let i = 0; i < 60; i++) {
+        fireworks.push(new Particle(cx, cy, color));
+      }
+    }, b * 400);
+  }
+  
+  let frameCount = 0;
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = fireworks.length - 1; i >= 0; i--) {
+      fireworks[i].update();
+      fireworks[i].draw();
+      if (fireworks[i].alpha <= 0) fireworks.splice(i, 1);
+    }
+    frameCount++;
+    if (fireworks.length > 0 || frameCount < 300) {
+      requestAnimationFrame(animate);
+    }
+  }
+  animate();
+}
+
+// ====== Initial hero animation ======
+window.addEventListener('load', () => {
+  document.querySelector('.hero').style.opacity = '1';
+});
+</script>
+</body>
+</html>
